@@ -1,0 +1,27 @@
+{
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "oxc.fmt.configPath": "./vite.config.ts",
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "explicit"
+  },
+  "vize.serverPath": "/Users/petaxa/Documents/dev/vilide-dir/vilide/node_modules/.pnpm/vize@0.225.0_vue@3.5.38/node_modules/vize/bin/vize",
+  "vize.enable": true,
+  "vize.lint.enable": true,
+  "vize.typecheck.enable": true,
+  "vize.editor.enable": true,
+  "vize.ecosystem.enable": true
+}

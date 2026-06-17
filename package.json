@@ -1,0 +1,23 @@
+{
+  "type": "module",
+  "scripts": {
+    "prepare": "vp config",
+    "dev": "vp dev",
+    "lint": "vize lint",
+    "fmt": "vize lint --fix & vize fmt",
+    "build": "vp build",
+    "preview": "serve dist/client"
+  },
+  "dependencies": {
+    "@vuerend/core": "^0.3.0",
+    "@vuerend/node": "^0.3.0",
+    "vue": "^3.5.38"
+  },
+  "devDependencies": {
+    "@vizejs/vite-plugin": "0.230.0",
+    "serve": "^14.2.6",
+    "vite-plus": "catalog:",
+    "vize": "0.230.0 "
+  },
+  "packageManager": "pnpm@11.7.0"
+}
