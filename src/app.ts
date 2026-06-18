@@ -7,7 +7,7 @@ const devStyleScripts = import.meta.env.DEV
   ? [
       {
         type: "module",
-        src: "/src/style-entry.ts",
+        src: `${import.meta.env.BASE_URL}src/style-entry.ts`,
       },
     ]
   : [];
@@ -35,7 +35,7 @@ export default defineApp({
       },
     ],
     scripts: [...devStyleScripts, { type: "module", children: slideDeckClientScript }],
-    stylesheets: ["/styles/site.css"],
+    stylesheets: [`${import.meta.env.BASE_URL}styles/site.css`],
   },
   routes,
 });

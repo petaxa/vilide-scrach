@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { slides } from "./pages";
-import { clampSlideIndex, getSlidePath } from "./slide-core";
+import { clampSlideIndex, getSlideUrl } from "./slide-core";
 
 const props = defineProps<{
   currentIndex: number;
@@ -21,13 +21,13 @@ const progress = computed(() => {
 const canGoPrevious = computed(() => currentIndex.value > 0);
 const canGoNext = computed(() => currentIndex.value < slideCount - 1);
 const previousPath = computed(() =>
-  canGoPrevious.value ? getSlidePath(currentIndex.value - 1) : undefined,
+  canGoPrevious.value ? getSlideUrl(currentIndex.value - 1) : undefined,
 );
 const nextPath = computed(() =>
-  canGoNext.value ? getSlidePath(currentIndex.value + 1) : undefined,
+  canGoNext.value ? getSlideUrl(currentIndex.value + 1) : undefined,
 );
-const firstPath = computed(() => getSlidePath(0));
-const lastPath = computed(() => getSlidePath(slideCount - 1));
+const firstPath = computed(() => getSlideUrl(0));
+const lastPath = computed(() => getSlideUrl(slideCount - 1));
 </script>
 
 <template>

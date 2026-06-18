@@ -1,3 +1,3 @@
 export { slideDeckClientScript } from "./client-script";
-export { clampSlideIndex, getSlidePath } from "./navigation";
+export { clampSlideIndex, getSlidePath, getSlideUrl } from "./navigation";
 export type { SlidePage } from "./types";

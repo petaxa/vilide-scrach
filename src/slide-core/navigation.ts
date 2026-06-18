@@ -4,3 +4,8 @@ export const clampSlideIndex = (index: number, slideCount: number) => {
 };
 
 export const getSlidePath = (index: number) => (index === 0 ? "/" : `/${index + 1}`);
+
+export const getSlideUrl = (index: number) => {
+  const baseUrl = import.meta.env.BASE_URL;
+  return index === 0 ? baseUrl : `${baseUrl}${index + 1}/`;
+};
