@@ -1,3 +1,5 @@
+import { SLIDE_HEIGHT, SLIDE_WIDTH } from "./viewport";
+
 export const slideDeckClientScript = `
 const initSlideDeck = () => {
   const deck = document.querySelector("[data-slide-deck]");
@@ -10,6 +12,28 @@ const initSlideDeck = () => {
   const previousKeys = new Set(["ArrowLeft", "ArrowUp", "PageUp", "Backspace"]);
   const fullscreenButton = document.querySelector("[data-slide-fullscreen]");
   const fullscreenIcon = fullscreenButton?.querySelector(".icon-fullscreen");
+  const stage = deck.querySelector("[data-slide-stage]");
+  const frame = deck.querySelector("[data-slide-frame]");
+  const calculateSlideScale = (availableWidth, availableHeight) => {
+    if (availableWidth === 0 || availableHeight === 0) {
+      return 0;
+    }
+
+    return Math.min(
+      availableWidth / ${SLIDE_WIDTH},
+      availableHeight / ${SLIDE_HEIGHT},
+    );
+  };
+
+  const updateSlideScale = () => {
+    if (!(stage instanceof HTMLElement) || !(frame instanceof HTMLElement)) {
+      return;
+    }
+
+    const scale = calculateSlideScale(stage.clientWidth, stage.clientHeight);
+    frame.style.setProperty("--slide-scale", String(scale));
+    frame.dataset.slideScale = String(scale);
+  };
 
   const navigate = (url) => {
     if (url) {
@@ -70,11 +94,21 @@ const initSlideDeck = () => {
       }
     } finally {
       updateFullscreen();
+      updateSlideScale();
     }
   });
 
-  document.addEventListener("fullscreenchange", updateFullscreen);
+  const resizeObserver = new ResizeObserver(updateSlideScale);
+  if (stage instanceof HTMLElement) {
+    resizeObserver.observe(stage);
+  }
+
+  document.addEventListener("fullscreenchange", () => {
+    updateFullscreen();
+    updateSlideScale();
+  });
   updateFullscreen();
+  updateSlideScale();
 };
 
 if (document.readyState === "loading") {

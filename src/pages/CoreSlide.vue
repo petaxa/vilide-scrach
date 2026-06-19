@@ -59,7 +59,7 @@
 .feature-list {
   align-content: center;
   display: grid;
-  gap: 3.056cqh;
+  gap: 1.667cqh;
 }
 
 .feature-list article {

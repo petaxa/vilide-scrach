@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { slides } from "./pages";
-import { clampSlideIndex, getSlideUrl } from "./slide-core";
+import { clampSlideIndex, getSlideUrl, SLIDE_HEIGHT, SLIDE_WIDTH } from "./slide-core";
 
 const props = defineProps<{
   currentIndex: number;
@@ -46,14 +46,20 @@ const lastPath = computed(() => getSlideUrl(slideCount - 1));
       <span :style="{ width: `${progress * 100}%` }"></span>
     </div>
 
-    <section class="deck-viewport" data-slide-viewport>
-      <div class="slide-frame">
-        <article
-          class="slide-canvas"
-          :aria-label="`${currentSlideNumber} / ${slideCount}: ${currentSlide.title}`"
+    <section class="deck-viewport">
+      <div class="deck-stage" data-slide-stage>
+        <div
+          class="slide-frame"
+          data-slide-frame
+          :style="{ height: `${SLIDE_HEIGHT}px`, width: `${SLIDE_WIDTH}px` }"
         >
-          <component :is="currentSlide.component" />
-        </article>
+          <article
+            class="slide-canvas"
+            :aria-label="`${currentSlideNumber} / ${slideCount}: ${currentSlide.title}`"
+          >
+            <component :is="currentSlide.component" />
+          </article>
+        </div>
       </div>
     </section>
 
@@ -107,7 +113,6 @@ const lastPath = computed(() => getSlideUrl(slideCount - 1));
   display: grid;
   grid-template-rows: 4px minmax(0, 1fr) auto;
   height: 100dvh;
-  min-height: 520px;
   overflow: hidden;
 }
 
@@ -129,18 +134,29 @@ const lastPath = computed(() => getSlideUrl(slideCount - 1));
 }
 
 .deck-viewport {
-  container-type: size;
-  display: grid;
   min-height: 0;
+  min-width: 0;
   overflow: hidden;
-  padding: 22px 22px 12px;
-  place-items: center;
+  position: relative;
+}
+
+.deck-stage {
+  bottom: 12px;
+  left: 22px;
+  min-height: 0;
+  min-width: 0;
+  position: absolute;
+  right: 22px;
+  top: 22px;
 }
 
 .slide-frame {
-  aspect-ratio: 16 / 9;
-  position: relative;
-  width: min(100cqw, 177.777cqh, 1280px);
+  --slide-scale: 1;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(var(--slide-scale));
+  transform-origin: center;
 }
 
 .slide-canvas {
@@ -279,12 +295,11 @@ const lastPath = computed(() => getSlideUrl(slideCount - 1));
 }
 
 @media (max-width: 640px) {
-  .slide-layout {
-    min-height: 420px;
-  }
-
-  .deck-viewport {
-    padding: 12px 12px 8px;
+  .deck-stage {
+    bottom: 8px;
+    left: 12px;
+    right: 12px;
+    top: 12px;
   }
 
   .deck-controls {
